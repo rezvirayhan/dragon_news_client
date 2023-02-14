@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Image } from "react-bootstrap";
+import { Button, Image } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -8,7 +8,13 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
 import LeftSideNav from "../LeftSideNav/LeftSideNav";
 const Header = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => console.error(error));
+  };
   return (
     <Navbar
       className="mb-3"
@@ -48,7 +54,23 @@ const Header = () => {
               className="mt-2"
               href="#deets"
             >
-              {user?.displayName}
+              {user?.uid ? (
+                <>
+                  <span> {user?.displayName}</span>
+                  <Button
+                    className="mx-2"
+                    variant="success"
+                    onClick={handleLogOut}
+                  >
+                    Log Out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login">Login</Link>
+                  <Link to="/register">Register</Link>
+                </>
+              )}
             </Nav.Link>
             <Nav.Link eventKey={2} href="#memes">
               {user?.photoURL ? (
