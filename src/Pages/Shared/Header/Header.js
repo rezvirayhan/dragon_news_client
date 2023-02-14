@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
+import { Image } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { FaUserAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
 import LeftSideNav from "../LeftSideNav/LeftSideNav";
@@ -41,9 +43,23 @@ const Header = () => {
             <LeftSideNav></LeftSideNav>
           </div>
           <Nav>
-            <Nav.Link href="#deets">{user?.displayName}</Nav.Link>
+            <Nav.Link
+              style={{ color: "white", fontWeight: "700" }}
+              className="mt-2"
+              href="#deets"
+            >
+              {user?.displayName}
+            </Nav.Link>
             <Nav.Link eventKey={2} href="#memes">
-              Dank memes
+              {user?.photoURL ? (
+                <Image
+                  style={{ height: "40px" }}
+                  roundedCircle
+                  src={user?.photoURL}
+                ></Image>
+              ) : (
+                <FaUserAlt></FaUserAlt>
+              )}
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
